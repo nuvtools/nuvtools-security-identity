@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net6;net7</TargetFrameworks>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Authors>Nuv Tools</Authors>
+		<Copyright>Copyright © 2023 Nuv Tools</Copyright>
+		<PackageProjectUrl>https://nuv.tools</PackageProjectUrl>
+		<SignAssembly>True</SignAssembly>
+		<AssemblyOriginatorKeyFile>NuvTools.Security.Identity.snk</AssemblyOriginatorKeyFile>
+		<Description>Helper library to be used with ASP.NET Identity.</Description>
+		<Version>7.0.0</Version>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<PackageIcon>icon.png</PackageIcon>
+		<DelaySign>False</DelaySign>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<RepositoryUrl>https://github.com/nuvtools/nuvtools-security-identity</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<AnalysisLevel>latest</AnalysisLevel>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageTags>Nuv Tools Security ASP.NET Identity</PackageTags>
+		<ImplicitUsings>true</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\icon.png">
+			<Link>icon.png</Link>
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\..\LICENSE">
+			<Link>LICENSE</Link>
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.3" />
+		<PackageReference Include="NuvTools.Security.Models" Version="7.0.0" />
+	</ItemGroup>
+</Project>
