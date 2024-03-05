@@ -16,8 +16,8 @@ public abstract class RoleBase<TKey> : IdentityRole<TKey> where TKey : IEquatabl
     }
 
     [Display(Name = nameof(Fields.Name), ResourceType = typeof(Fields))]
-    [Required(ErrorMessageResourceName = nameof(Messages.XRequired), ErrorMessageResourceType = typeof(Messages))]
-    [MaxLength(30, ErrorMessageResourceName = nameof(Messages.XMustBeUpToYCharacters), ErrorMessageResourceType = typeof(Messages))]
+    [Required(ErrorMessageResourceName = nameof(DynamicValidationMessages.XRequired), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+    [MaxLength(30, ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustBeUpToYCharacters), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
     public override string Name { get => base.Name; set => base.Name = value; }
 
     [NotMapped]

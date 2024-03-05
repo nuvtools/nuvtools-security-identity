@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6;net7</TargetFrameworks>
+		<TargetFrameworks>net6;net7;net8</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Nuv Tools</Authors>
-		<Copyright>Copyright © 2023 Nuv Tools</Copyright>
+		<Copyright>Copyright © 2024 Nuv Tools</Copyright>
 		<PackageProjectUrl>https://nuv.tools</PackageProjectUrl>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>NuvTools.Security.Identity.AspNetCore.snk</AssemblyOriginatorKeyFile>
 		<Description>Library to use with ASP.NET Identity modules on server-side.</Description>
-		<Version>7.1.0</Version>
+		<Version>8.0.3</Version>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<PackageIcon>icon.png</PackageIcon>
@@ -43,9 +43,9 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="NuvTools.Common" Version="7.1.3" />
-		<PackageReference Include="NuvTools.Notification.Mail" Version="7.0.0" />
-		<PackageReference Include="NuvTools.Security.Models" Version="7.0.0" />
+		<PackageReference Include="NuvTools.Common" Version="8.0.1" />
+		<PackageReference Include="NuvTools.Notification.Mail" Version="8.0.3" />
+		<PackageReference Include="NuvTools.Security.Models" Version="8.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>

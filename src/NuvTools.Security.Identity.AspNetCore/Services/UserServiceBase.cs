@@ -59,7 +59,7 @@ public abstract class UserServiceBase<TUser, TRole, TKey> where TUser : UserBase
         var userWithSameEmail = await _userManager.FindByEmailAsync(value.Email);
         if (userWithSameEmail != null)
         {
-            return Result<TKey>.ValidationFail(string.Format(Messages.EmailXAlreadyTaken, value.Email));
+            return Result<TKey>.ValidationFail(string.Format(DynamicValidationMessages.EmailXAlreadyTaken, value.Email));
         }
 
         value.UserName = value.Email;
@@ -142,8 +142,8 @@ public abstract class UserServiceBase<TUser, TRole, TKey> where TUser : UserBase
         var verificationUri = await GenerateEmailConfirmationUriAsync(value, origin);
         await _mailService.SendAsync(new MailMessage()
         {
-            To = new List<MailAddress> { new MailAddress { Address = value.Email, DisplayName = value.Name } },
-            Body = string.Format(message ?? Messages.EmailConfirmationContentWithLinkX, HtmlEncoder.Default.Encode(verificationUri)),
+            To = new List<MailAddress> { new() { Address = value.Email, DisplayName = value.Name } },
+            Body = string.Format(message ?? DynamicMessages.EmailConfirmationContentWithLinkX, HtmlEncoder.Default.Encode(verificationUri)),
             Subject = subject ?? Messages.ConfirmRegistration
         });
 
@@ -266,7 +266,7 @@ public abstract class UserServiceBase<TUser, TRole, TKey> where TUser : UserBase
         var passwordResetURL = QueryHelpers.AddQueryString(_enpointUri.ToString(), "Token", token);
         var request = new MailMessage()
         {
-            Body = string.Format(message ?? Messages.PasswordResetEmailContentWithLinkX, HtmlEncoder.Default.Encode(passwordResetURL)),
+            Body = string.Format(message ?? DynamicMessages.PasswordResetEmailContentWithLinkX, HtmlEncoder.Default.Encode(passwordResetURL)),
             Subject = subject ?? Fields.ResetPassword,
             To = new List<MailAddress> { new MailAddress { Address = email } }
         };
