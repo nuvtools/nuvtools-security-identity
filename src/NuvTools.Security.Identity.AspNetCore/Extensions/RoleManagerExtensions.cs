@@ -21,7 +21,7 @@ public static class RoleManagerExtensions
         }
     }
 
-    public static async Task AddPermissionClaim<TRole>(this RoleManager<TRole> roleManager, TRole role, string value, string applicationId = null) where TRole : class
+    public static async Task AddPermissionClaim<TRole>(this RoleManager<TRole> roleManager, TRole role, string value, string? applicationId = null) where TRole : class
     {
         var claimType = string.IsNullOrEmpty(applicationId) ?
                         Security.Models.ClaimTypes.Permission :

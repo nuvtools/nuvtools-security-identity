@@ -10,17 +10,17 @@ public abstract class UserBase<TKey> : IdentityUser<TKey> where TKey : IEquatabl
 {
     [Display(Name = nameof(Fields.Email), ResourceType = typeof(Fields))]
     [Required(ErrorMessageResourceName = nameof(DynamicValidationMessages.XRequired), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
-    [MaxLength(100, ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustBeUpToYCharacters), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+    [MaxLength(100, ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustHaveUpToYCharacters), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
     [EmailAddress(ErrorMessageResourceName = nameof(Messages.InvalidEmail), ErrorMessageResourceType = typeof(Messages))]
-    public override string Email { get => base.Email; set => base.Email = value; }
+    public override string? Email { get => base.Email; set => base.Email = value; }
 
     [Display(Name = nameof(Fields.Name), ResourceType = typeof(Fields))]
-    [MaxLength(50, ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustBeUpToYCharacters), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
-    public virtual string Name { get; set; }
+    [MaxLength(50, ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustHaveUpToYCharacters), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+    public virtual string? Name { get; set; }
 
     [Display(Name = nameof(Fields.Surname), ResourceType = typeof(Fields))]
-    [MaxLength(50, ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustBeUpToYCharacters), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
-    public virtual string Surname { get; set; }
+    [MaxLength(50, ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustHaveUpToYCharacters), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+    public virtual string? Surname { get; set; }
 
     [Display(Name = nameof(Fields.Status), ResourceType = typeof(Fields))]
     public virtual bool Status { get; set; }
@@ -28,15 +28,15 @@ public abstract class UserBase<TKey> : IdentityUser<TKey> where TKey : IEquatabl
     [NotMapped]
     [Display(Name = nameof(Fields.Password), ResourceType = typeof(Fields))]
     [Required(ErrorMessageResourceName = nameof(DynamicValidationMessages.XRequired), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
-    [MaxLength(40, ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustBeUpToYCharacters), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
-    [MinLength(6, ErrorMessageResourceName = nameof(DynamicValidationMessages.XShouldHaveAtLeastYCharacters), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+    [MaxLength(40, ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustHaveUpToYCharacters), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+    [MinLength(6, ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustHaveAtLeastYCharacters), ErrorMessageResourceType = typeof(DynamicValidationMessages))]
     [PasswordComplexityCapitalLetters(1)]
     [PasswordComplexityLowerCaseLetters(1)]
     [PasswordComplexityDigits(1)]
-    public virtual string Password { get; set; }
+    public virtual string? Password { get; set; }
 
     [NotMapped]
-    public string RefreshToken { get; set; }
+    public string? RefreshToken { get; set; }
 
     [NotMapped]
     public DateTime RefreshTokenExpiryTime { get; set; }

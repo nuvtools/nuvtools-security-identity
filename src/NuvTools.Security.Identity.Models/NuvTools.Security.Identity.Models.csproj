@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6;net7;net8</TargetFrameworks>
+		<TargetFrameworks>net8</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Nuv Tools</Authors>
 		<Copyright>Copyright © 2024 Nuv Tools</Copyright>
-		<PackageProjectUrl>https://nuv.tools</PackageProjectUrl>
+		<PackageProjectUrl>https://nuvtools.com</PackageProjectUrl>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>NuvTools.Security.Identity.Models.snk</AssemblyOriginatorKeyFile>
 		<Description>Contains models to be used with ASP.NET Identity modules.</Description>
-		<Version>8.0.4</Version>
+		<Version>8.1.0</Version>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<PackageIcon>icon.png</PackageIcon>
@@ -22,6 +22,7 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageTags>Nuv Tools Security ASP.NET Identity</PackageTags>
 		<ImplicitUsings>true</ImplicitUsings>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -42,9 +43,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.3" />
-		<PackageReference Include="NuvTools.Resources" Version="8.0.0" />
-		<PackageReference Include="NuvTools.Validation" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.8" />
+		<PackageReference Include="NuvTools.Resources" Version="8.1.1" />
+		<PackageReference Include="NuvTools.Validation" Version="8.1.1" />
 	</ItemGroup>
 
 </Project>
