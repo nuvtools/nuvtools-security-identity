@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8;net9</TargetFrameworks>
@@ -10,8 +10,8 @@
 		<Copyright>Copyright © 2025 Nuv Tools</Copyright>
 		<PackageProjectUrl>https://nuvtools.com</PackageProjectUrl>
 		<SignAssembly>True</SignAssembly>
-		<AssemblyOriginatorKeyFile>NuvTools.Security.Identity.Models.snk</AssemblyOriginatorKeyFile>
-		<Description>Contains models to be used with ASP.NET Identity modules.</Description>
+		<AssemblyOriginatorKeyFile>NuvTools.Security.Identity.EntityFrameworkCore.snk</AssemblyOriginatorKeyFile>
+		<Description>Contains Entity Framework Core helpers to be used with ASP.NET Identity modules.</Description>
 		<Version>9.1.0</Version>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
@@ -23,7 +23,7 @@
 		<RepositoryType>git</RepositoryType>
 		<AnalysisLevel>latest</AnalysisLevel>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageTags>Nuv Tools Security ASP.NET Identity</PackageTags>
+		<PackageTags>Nuv Tools Security ASP.NET Identity Entity Framework Core</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -42,11 +42,11 @@
 			<PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
-
+	
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.3" />
-		<PackageReference Include="NuvTools.Resources" Version="9.0.0" />
-		<PackageReference Include="NuvTools.Validation" Version="9.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.3" Condition="'$(TargetFramework)' == 'net9'" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.14" Condition="'$(TargetFramework)' == 'net8'" />
+		<PackageReference Include="NuvTools.Data.EntityFrameworkCore" Version="9.2.1" />
 	</ItemGroup>
 
 </Project>

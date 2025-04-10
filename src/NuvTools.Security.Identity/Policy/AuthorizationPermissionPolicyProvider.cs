@@ -4,14 +4,9 @@ using NuvTools.Security.Models;
 
 namespace NuvTools.Security.Identity.Policy;
 
-public class AuthorizationPermissionPolicyProvider : IAuthorizationPolicyProvider
+public class AuthorizationPermissionPolicyProvider(IOptions<AuthorizationOptions> options) : IAuthorizationPolicyProvider
 {
-    public DefaultAuthorizationPolicyProvider FallbackPolicyProvider { get; }
-
-    public AuthorizationPermissionPolicyProvider(IOptions<AuthorizationOptions> options)
-    {
-        FallbackPolicyProvider = new DefaultAuthorizationPolicyProvider(options);
-    }
+    public DefaultAuthorizationPolicyProvider FallbackPolicyProvider { get; } = new DefaultAuthorizationPolicyProvider(options);
 
     public Task<AuthorizationPolicy> GetDefaultPolicyAsync() => FallbackPolicyProvider.GetDefaultPolicyAsync();
 

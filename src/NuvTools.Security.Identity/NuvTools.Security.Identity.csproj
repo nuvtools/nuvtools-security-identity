@@ -2,14 +2,17 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net8;net9</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Nuv Tools</Authors>
-		<Copyright>Copyright © 2024 Nuv Tools</Copyright>
+		<Copyright>Copyright © 2025 Nuv Tools</Copyright>
 		<PackageProjectUrl>https://nuvtools.com</PackageProjectUrl>
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>NuvTools.Security.Identity.snk</AssemblyOriginatorKeyFile>
 		<Description>Helper library to be used with ASP.NET Identity.</Description>
-		<Version>9.0.0</Version>
+		<Version>9.1.0</Version>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<PackageIcon>icon.png</PackageIcon>
@@ -21,8 +24,6 @@
 		<AnalysisLevel>latest</AnalysisLevel>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageTags>Nuv Tools Security ASP.NET Identity</PackageTags>
-		<ImplicitUsings>true</ImplicitUsings>
-		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -43,7 +44,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.0" />
-		<PackageReference Include="NuvTools.Security.Models" Version="9.0.0" />
+		<PackageReference Include="NuvTools.Security" Version="9.1.0" />
 	</ItemGroup>
 </Project>
