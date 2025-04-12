@@ -9,18 +9,6 @@ using System.Linq.Expressions;
 
 namespace NuvTools.Security.Identity.EntityFrameworkCore;
 
-public class IdentityIntDbContext : IdentityDbContextBase<IdentityUser<int>, IdentityRole<int>, int>;
-
-public class IdentityGuidDbContext : IdentityDbContextBase<IdentityUser<Guid>, IdentityRole<Guid>, Guid>;
-
-public class IdentityIntDbContextBase<TUser, TRole> : IdentityDbContextBase<TUser, TRole, int>
-                                                                where TUser : IdentityUser<int>
-                                                                where TRole : IdentityRole<int>;
-
-public class IdentityGuidDbContextBase<TUser, TRole> : IdentityDbContextBase<TUser, TRole, Guid>
-                                                                where TUser : IdentityUser<Guid>
-                                                                where TRole : IdentityRole<Guid>;
-
 public abstract class IdentityDbContextBase<TUser, TRole, TIdentityKey> : IdentityDbContext<TUser, TRole, TIdentityKey>, IDbContextCommands, IDbContextWithListCommands
                                                         where TUser : IdentityUser<TIdentityKey>
                                                         where TRole : IdentityRole<TIdentityKey>

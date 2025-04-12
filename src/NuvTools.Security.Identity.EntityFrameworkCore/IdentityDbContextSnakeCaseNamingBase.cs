@@ -3,18 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NuvTools.Security.Identity.EntityFrameworkCore;
 
-public class IdentityIntDbContextSnakeCaseNaming : IdentityDbContextSnakeCaseNamingBase<IdentityUser<int>, IdentityRole<int>, int>;
-
-public class IdentityGuidDbContextSnakeCaseNaming : IdentityDbContextSnakeCaseNamingBase<IdentityUser<Guid>, IdentityRole<Guid>, Guid>;
-
-public class IdentityIntDbContextSnakeCaseNaming<TUser, TRole> : IdentityDbContextSnakeCaseNamingBase<TUser, TRole, int>
-                                                                                where TUser : IdentityUser<int>
-                                                                                where TRole : IdentityRole<int>;
-
-public class IdentityGuidDbContextSnakeCaseNaming<TUser, TRole> : IdentityDbContextSnakeCaseNamingBase<TUser, TRole, Guid>
-                                                                        where TUser : IdentityUser<Guid>
-                                                                        where TRole : IdentityRole<Guid>;
-
 public abstract class IdentityDbContextSnakeCaseNamingBase<TUser, TRole, TIdentityKey> : IdentityDbContextBase<TUser, TRole, TIdentityKey>
                                                                                             where TUser : IdentityUser<TIdentityKey>
                                                                                             where TRole : IdentityRole<TIdentityKey>

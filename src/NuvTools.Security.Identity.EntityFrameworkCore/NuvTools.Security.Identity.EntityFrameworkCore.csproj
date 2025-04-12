@@ -12,7 +12,7 @@
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>NuvTools.Security.Identity.EntityFrameworkCore.snk</AssemblyOriginatorKeyFile>
 		<Description>Contains Entity Framework Core helpers to be used with ASP.NET Identity modules.</Description>
-		<Version>9.1.0</Version>
+		<Version>9.1.1</Version>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<PackageIcon>icon.png</PackageIcon>
@@ -44,9 +44,9 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.3" Condition="'$(TargetFramework)' == 'net9'" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.14" Condition="'$(TargetFramework)' == 'net8'" />
-		<PackageReference Include="NuvTools.Data.EntityFrameworkCore" Version="9.2.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.4" Condition="'$(TargetFramework)' == 'net9'" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.15" Condition="'$(TargetFramework)' == 'net8'" />
+		<PackageReference Include="NuvTools.Data.EntityFrameworkCore" Version="9.2.2" />
 	</ItemGroup>
 
 </Project>
