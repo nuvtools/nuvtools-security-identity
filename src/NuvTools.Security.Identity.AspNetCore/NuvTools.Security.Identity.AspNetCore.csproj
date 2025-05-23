@@ -12,7 +12,7 @@
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>NuvTools.Security.Identity.AspNetCore.snk</AssemblyOriginatorKeyFile>
 		<Description>Library to use with ASP.NET Identity modules on server-side.</Description>
-		<Version>9.1.1</Version>
+		<Version>9.2.0</Version>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<PackageIcon>icon.png</PackageIcon>
@@ -45,8 +45,8 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="NuvTools.Common" Version="9.1.1" />
-		<PackageReference Include="NuvTools.Security" Version="9.1.0" />
+		<PackageReference Include="NuvTools.Common" Version="9.1.2" />
+		<PackageReference Include="NuvTools.Security" Version="9.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>
