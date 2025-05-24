@@ -12,7 +12,7 @@
 		<SignAssembly>True</SignAssembly>
 		<AssemblyOriginatorKeyFile>NuvTools.Security.Identity.EntityFrameworkCore.snk</AssemblyOriginatorKeyFile>
 		<Description>Contains Entity Framework Core helpers to be used with ASP.NET Identity modules.</Description>
-		<Version>9.2.1</Version>
+		<Version>9.2.2</Version>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<PackageIcon>icon.png</PackageIcon>
