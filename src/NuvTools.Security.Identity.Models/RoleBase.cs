@@ -41,12 +41,12 @@ public abstract class RoleBase<TKey> : IdentityRole<TKey> where TKey : IEquatabl
         Name = nameof(Fields.Name),
         ResourceType = typeof(Fields))]
     [Required(
-        ErrorMessageResourceName = nameof(DynamicValidationMessages.XRequired),
-        ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+        ErrorMessageResourceName = nameof(Messages.XRequired),
+        ErrorMessageResourceType = typeof(Messages))]
     [MaxLength(
         30,
-        ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustHaveUpToYCharacters),
-        ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+        ErrorMessageResourceName = nameof(Messages.XMustHaveUpToYCharacters),
+        ErrorMessageResourceType = typeof(Messages))]
     public override string? Name
     {
         get => base.Name;

@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src\NuvTools.Security.Identity.Models\NuvTools.Security.Identity.Models.csproj" />
+    <Project Path="src\NuvTools.Security.Identity\NuvTools.Security.Identity.csproj" />
+    <Project Path="src\NuvTools.Security.Identity.AspNetCore\NuvTools.Security.Identity.AspNetCore.csproj" />
+    <Project Path="src\NuvTools.Security.Identity.EntityFrameworkCore\NuvTools.Security.Identity.EntityFrameworkCore.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+</Solution>

@@ -76,7 +76,7 @@ public abstract class UserServiceBase<TUser, TRole, TKey>(
         var existing = await userManager.FindByEmailAsync(value.Email);
         if (existing is not null)
             return Result<TKey>.ValidationFail(
-                string.Format(DynamicValidationMessages.EmailXAlreadyTaken, value.Email));
+                string.Format(Messages.EmailXAlreadyTaken, value.Email));
 
         value.UserName = value.Email;
 

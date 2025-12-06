@@ -27,12 +27,12 @@ public abstract class UserBase<TKey> : IdentityUser<TKey>
     /// </remarks>
     [Display(Name = nameof(Fields.Email), ResourceType = typeof(Fields))]
     [Required(
-        ErrorMessageResourceName = nameof(DynamicValidationMessages.XRequired),
-        ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+        ErrorMessageResourceName = nameof(Messages.XRequired),
+        ErrorMessageResourceType = typeof(Messages))]
     [MaxLength(
         100,
-        ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustHaveUpToYCharacters),
-        ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+        ErrorMessageResourceName = nameof(Messages.XMustHaveUpToYCharacters),
+        ErrorMessageResourceType = typeof(Messages))]
     [EmailAddress(
         ErrorMessageResourceName = nameof(Messages.InvalidEmail),
         ErrorMessageResourceType = typeof(Messages))]
@@ -48,8 +48,8 @@ public abstract class UserBase<TKey> : IdentityUser<TKey>
     [Display(Name = nameof(Fields.Name), ResourceType = typeof(Fields))]
     [MaxLength(
         50,
-        ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustHaveUpToYCharacters),
-        ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+        ErrorMessageResourceName = nameof(Messages.XMustHaveUpToYCharacters),
+        ErrorMessageResourceType = typeof(Messages))]
     public virtual string? Name { get; set; }
 
     /// <summary>
@@ -58,8 +58,8 @@ public abstract class UserBase<TKey> : IdentityUser<TKey>
     [Display(Name = nameof(Fields.Surname), ResourceType = typeof(Fields))]
     [MaxLength(
         50,
-        ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustHaveUpToYCharacters),
-        ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+        ErrorMessageResourceName = nameof(Messages.XMustHaveUpToYCharacters),
+        ErrorMessageResourceType = typeof(Messages))]
     public virtual string? Surname { get; set; }
 
     /// <summary>
@@ -79,16 +79,16 @@ public abstract class UserBase<TKey> : IdentityUser<TKey>
     [NotMapped]
     [Display(Name = nameof(Fields.Password), ResourceType = typeof(Fields))]
     [Required(
-        ErrorMessageResourceName = nameof(DynamicValidationMessages.XRequired),
-        ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+        ErrorMessageResourceName = nameof(Messages.XRequired),
+        ErrorMessageResourceType = typeof(Messages))]
     [MaxLength(
         40,
-        ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustHaveUpToYCharacters),
-        ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+        ErrorMessageResourceName = nameof(Messages.XMustHaveUpToYCharacters),
+        ErrorMessageResourceType = typeof(Messages))]
     [MinLength(
         6,
-        ErrorMessageResourceName = nameof(DynamicValidationMessages.XMustHaveAtLeastYCharacters),
-        ErrorMessageResourceType = typeof(DynamicValidationMessages))]
+        ErrorMessageResourceName = nameof(Messages.XMustHaveAtLeastYCharacters),
+        ErrorMessageResourceType = typeof(Messages))]
     [PasswordComplexityCapitalLetters(1)]
     [PasswordComplexityLowerCaseLetters(1)]
     [PasswordComplexityDigits(1)]
