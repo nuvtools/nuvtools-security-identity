@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using NuvTools.Common.ResultWrapper;
+using NuvTools.Common.Strings;
 using NuvTools.Resources;
 using NuvTools.Security.Identity.Models;
 using System.Text;
@@ -56,7 +57,7 @@ public abstract class UserServiceBase<TUser, TRole, TKey>(
     {
         var user = await GetAsync(id);
         if (user is null)
-            return Result.ValidationFail(Messages.UserNotFound);
+            return Result.ValidationFail(Messages.XNotFound.Format(Fields.User));
 
         var result = await userManager.DeleteAsync(user);
 
@@ -111,7 +112,7 @@ public abstract class UserServiceBase<TUser, TRole, TKey>(
     {
         var user = await GetAsync(value.Id) ?? await GetByEmailAsync(value.Email ?? string.Empty);
         if (user is null)
-            return Result.ValidationFail(Messages.UserNotFound);
+            return Result.ValidationFail(Messages.XNotFound.Format(Fields.User));
 
         user.Name = value.Name;
         user.Surname = value.Surname;
@@ -129,7 +130,7 @@ public abstract class UserServiceBase<TUser, TRole, TKey>(
     {
         var user = await GetAsync(id);
         if (user is null)
-            return Result.ValidationFail(Messages.UserNotFound);
+            return Result.ValidationFail(Messages.XNotFound.Format(Fields.User));
 
         user.Status = !user.Status;
         var result = await userManager.UpdateAsync(user);
@@ -272,7 +273,7 @@ public abstract class UserServiceBase<TUser, TRole, TKey>(
 
         var user = await userManager.FindByEmailAsync(email);
         if (user is null)
-            return Result.ValidationFail(Messages.UserNotFound);
+            return Result.ValidationFail(Messages.XNotFound.Format(Fields.User));
 
         var decoded = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
         var result = await userManager.ResetPasswordAsync(user, decoded, newPassword);

@@ -4,135 +4,141 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Nuv Tools Security is a modular library suite for ASP.NET Identity integration targeting .NET 8, 9, and 10. The solution consists of four independent NuGet packages that work together to provide identity models, helpers, ASP.NET Core integration, and Entity Framework Core persistence.
+NuvTools.Security.Identity is a modular library suite for ASP.NET Identity integration targeting .NET 8, .NET 9, and .NET 10. The solution consists of four NuGet packages that provide identity models, permission-based authorization, user management services, and Entity Framework Core persistence.
 
-## Solution Structure
+- **src/NuvTools.Security.Identity.Models** - Base models, form DTOs, and API models with localized validation
+- **src/NuvTools.Security.Identity** - Permission-based authorization with dynamic policy provider
+- **src/NuvTools.Security.Identity.AspNetCore** - User management service, email/password workflows, and role extensions
+- **src/NuvTools.Security.Identity.EntityFrameworkCore** - Identity DbContext with transaction management and batch operations
 
-The solution contains four main projects under `src/`:
+All libraries are published as NuGet packages.
 
-1. **NuvTools.Security.Identity.Models** - Base models and forms for ASP.NET Identity
-   - Contains `UserBase<TKey>` and `RoleBase<TKey>` abstract classes
-   - Includes form models (LoginForm, ChangePasswordForm, etc.)
-   - API models (TokenResponse, RefreshTokenRequest)
-   - Uses localized validation attributes via NuvTools.Resources
+## Build and Test Commands
 
-2. **NuvTools.Security.Identity** - Helper library with authorization utilities
-   - Permission-based authorization: `AuthorizationPermissionPolicyProvider`, `PermissionRequirement`, `PermissionAuthorizationHandler`
-   - Enables dynamic policy generation based on `ClaimTypes.Permission`
+**Note:** This solution uses the modern `.slnx` (XML-based solution) format introduced in Visual Studio 2022 v17.11.
 
-3. **NuvTools.Security.Identity.AspNetCore** - Server-side ASP.NET Core integration
-   - `UserServiceBase<TUser, TRole, TKey>` - Comprehensive user management service
-   - `RoleManagerExtensions` - Role management helpers
-   - Standardized returns using `IResult` and `IResult<T>` from NuvTools.Common.ResultWrapper
-   - Handles: user CRUD, email confirmation, password management, role assignments
-
-4. **NuvTools.Security.Identity.EntityFrameworkCore** - EF Core persistence layer
-   - `IdentityDbContextBase<TUser, TRole, TIdentityKey>` - Base context extending IdentityDbContext
-   - Implements `IDbContextCommands` and `IDbContextWithListCommands` from NuvTools.Data.EntityFrameworkCore
-   - Provides transaction support and batch operations (SyncFromListAsync, AddOrUpdateFromListAsync, etc.)
-
-## Building and Testing
-
-**Build the solution:**
+### Build the solution
 ```bash
 dotnet build NuvTools.Security.Identity.slnx
 ```
 
-**Build in Release mode (generates NuGet packages):**
+### Build for specific configuration
 ```bash
-dotnet build NuvTools.Security.Identity.slnx -c Release
+dotnet build NuvTools.Security.Identity.slnx --configuration Release
 ```
 
-Note: `GeneratePackageOnBuild` is enabled in all projects, so building in Release mode creates NuGet packages.
+## Architecture and Key Components
 
-**Clean build artifacts:**
-```bash
-dotnet clean NuvTools.Security.Identity.slnx
-```
+### NuvTools.Security.Identity.Models Library
 
-**Build a specific project:**
-```bash
-dotnet build src/NuvTools.Security.Identity.Models/NuvTools.Security.Identity.Models.csproj
-```
+Base models and forms for ASP.NET Identity.
 
-## Project Dependencies
+**UserBase\<TKey\>** - Abstract user entity extending IdentityUser\<TKey\>:
+- Properties: Email (with validation), Name, Surname, Status
+- NotMapped properties: Password, RefreshToken, RefreshTokenExpiryTime (runtime use only)
+- Password validation: 6-40 chars, min 1 uppercase, 1 lowercase, 1 digit
 
-### External NuvTools Dependencies
-All projects depend on other NuvTools packages (version 10.0.0):
-- NuvTools.Resources (localized validation messages)
-- NuvTools.Validation (password complexity attributes)
-- NuvTools.Common (IResult wrappers)
-- NuvTools.Security (ClaimTypes, security models)
-- NuvTools.Data.EntityFrameworkCore (DbContext extensions)
+**RoleBase\<TKey\>** - Abstract role entity extending IdentityRole\<TKey\>:
+- Properties: Name (max 30 chars), Claims (NotMapped)
 
-### Microsoft Dependencies
-- Microsoft.AspNetCore.Identity.EntityFrameworkCore (version varies by target framework)
-- Microsoft.Extensions.Identity.Stores
-- Microsoft.AspNetCore.Authorization
+**Form Models** (all use localized validation from NuvTools.Resources):
+- `LoginForm` - Email, Password
+- `UserForm` - Id, Email, Name, Surname, Status, EmailConfirmed
+- `UserWithPasswordForm` - Extends UserForm with Password/ConfirmPassword
+- `ChangePasswordForm` - Current password, new password, confirm
+- `ForgotPasswordForm` - Email
+- `ResetPasswordForm` - Email, Password, Token
+- `UpdateProfileForm` - Name, Surname, Email, Token
 
-### Version-Specific Package References
-The EntityFrameworkCore project uses conditional package references:
-- .NET 10: Microsoft.AspNetCore.Identity.EntityFrameworkCore 10.0.0
-- .NET 9: Microsoft.AspNetCore.Identity.EntityFrameworkCore 9.0.11
-- .NET 8: Microsoft.AspNetCore.Identity.EntityFrameworkCore 8.0.22
+**API Models**: `TokenResponse`, `RefreshTokenRequest`
+
+**UserRoles** - DTO for user-role associations (UserId, Roles)
+
+### NuvTools.Security.Identity Library
+
+Permission-based authorization system.
+
+**AuthorizationPermissionPolicyProvider** - Custom IAuthorizationPolicyProvider:
+- Dynamically generates policies for names starting with "Permission."
+- Creates PermissionRequirement for matching policies
+- Delegates non-permission policies to DefaultAuthorizationPolicyProvider
+
+**PermissionRequirement** - IAuthorizationRequirement with permission string
+
+**PermissionAuthorizationHandler** - AuthorizationHandler\<PermissionRequirement\>:
+- Checks ClaimTypes.Permission claims (case-insensitive)
+- Requires issuer = "LOCAL AUTHORITY"
+
+### NuvTools.Security.Identity.AspNetCore Library
+
+Server-side user management and role administration.
+
+**UserServiceBase\<TUser, TRole, TKey\>** - Abstract service (all methods return IResult/IResult\<T\>):
+- User CRUD: GetAllAsync, GetAsync, GetByEmailAsync, CreateAsync, UpdateAsync, DeleteAsync
+- CreateWithRolesAsync - Create user and assign roles
+- ToggleUserStatusAsync - Toggle Status flag
+- Email confirmation: GenerateEmailConfirmationTokenAsync, GenerateEmailConfirmationUriAsync, ConfirmEmailAsync
+- Email change: RequestChangeEmailUrlAsync, ChangeEmailAsync
+- Password: ChangePasswordAsync, RequestResetPasswordUrlAsync, ResetPasswordAsync
+- Roles: GetRolesAsync, UpdateRolesAsync
+
+**RoleManagerExtensions** - Extension methods for RoleManager\<TRole\>:
+- AddClaimsAsync, AddClaimAsync - Add claims to roles
+- AddPermissionClaim, AddPermissionClaims - Add permission-type claims
+
+### NuvTools.Security.Identity.EntityFrameworkCore Library
+
+Identity persistence layer.
+
+**IdentityDbContextBase\<TUser, TRole, TIdentityKey\>** - Abstract DbContext:
+- Extends IdentityDbContext, implements IDbContextCommands and IDbContextWithListCommands
+- Transactions: BeginTransactionAsync, CommitTransactionAsync, RollbackTransactionAsync
+- Execution strategy: ExecuteWithStrategyAsync
+- CRUD: AddAndSaveAsync, UpdateAndSaveAsync, RemoveAndSaveAsync
+- Batch: SyncFromListAsync, AddOrUpdateFromListAsync, AddOrRemoveFromListAsync
 
 ## Architecture Patterns
 
 ### Generic Type Parameters
-All core classes use generic type parameters for flexibility:
-- `TUser` - User entity type (must inherit from `UserBase<TKey>` or `IdentityUser<TKey>`)
-- `TRole` - Role entity type (must inherit from `IdentityRole<TKey>`)
-- `TKey` - Primary key type (e.g., Guid, int) with `IEquatable<TKey>` constraint
-
-### Multi-Targeting
-All projects target three frameworks: `net8`, `net9`, and `net10.0`. When adding features, ensure compatibility across all targets.
+- `TUser` - User entity (inherits UserBase\<TKey\> or IdentityUser\<TKey\>)
+- `TRole` - Role entity (inherits IdentityRole\<TKey\>)
+- `TKey` - Primary key type (e.g., Guid, int) with IEquatable\<TKey\>
 
 ### Localization
-This codebase uses resource-based localization extensively:
+All validation uses resource-based localization:
 - Display attributes reference `Fields` resource type
-- Validation messages reference `DynamicValidationMessages` and `Messages` resources
-- All error messages should use localized resources, not hardcoded strings
+- Validation messages reference `Messages` resources
+- Error messages should use localized resources, not hardcoded strings
 
 ### Result Pattern
-The AspNetCore library uses `IResult` and `IResult<T>` wrappers instead of throwing exceptions:
+UserServiceBase uses IResult/IResult\<T\> wrappers from NuvTools.Common.ResultWrapper:
 - `Result.Success()` / `Result<T>.Success(data)`
 - `Result.Fail(message)` / `Result.ValidationFail(message)`
-- Check `result.Succeeded` before accessing `result.Data`
 
-### NotMapped Properties
-`UserBase<TKey>` includes unmapped properties for runtime use:
-- `Password` - For registration/password change (not persisted)
-- `RefreshToken` and `RefreshTokenExpiryTime` - For JWT refresh flows
+## Code Style and Conventions
 
-## Code Conventions
+- **Nullable reference types** are enabled (`<Nullable>enable</Nullable>`)
+- **Implicit usings** are enabled (`<ImplicitUsings>enable</ImplicitUsings>`)
+- **Code style enforcement** is enabled during build (`<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>`)
+- **XML documentation generation** is required (`<GenerateDocumentationFile>True</GenerateDocumentationFile>`)
 
-### Validation Attributes
-When adding validation to models:
-- Use `[Display(Name = nameof(Fields.PropertyName), ResourceType = typeof(Fields))]`
-- Use resource-based error messages: `ErrorMessageResourceName` and `ErrorMessageResourceType`
-- Password complexity uses NuvTools.Validation attributes: `[PasswordComplexityCapitalLetters(1)]`, `[PasswordComplexityLowerCaseLetters(1)]`, `[PasswordComplexityDigits(1)]`
+## Dependencies
 
-### Service Method Patterns
-When extending `UserServiceBase`:
-- Validate inputs with `ArgumentException.ThrowIfNullOrEmpty()`
-- Return `IResult` or `IResult<T>` (never throw exceptions for business logic failures)
-- Use localized messages from `Messages` resources
-- Check user existence before operations: `await GetAsync(id)` or `await GetByEmailAsync(email)`
+### NuvTools.Security.Identity.Models
+- Microsoft.Extensions.Identity.Stores [10.0.2,10.1.0)
+- NuvTools.Resources [10.1.1,10.2.0)
+- NuvTools.Validation [10.1.0,10.2.0)
 
-### Entity Framework Extensions
-The `IdentityDbContextBase` exposes batch operations from NuvTools.Data.EntityFrameworkCore:
-- `SyncFromListAsync` - Synchronizes database with a list (adds new, removes missing)
-- `AddOrUpdateFromListAsync` - Upserts entities from a list
-- `AddOrRemoveFromListAsync` - Adds or removes based on list presence
+### NuvTools.Security.Identity
+- Microsoft.AspNetCore.Authorization [10.0.2,10.1.0)
+- NuvTools.Security [10.1.0,10.2.0)
 
-## Package Metadata
+### NuvTools.Security.Identity.AspNetCore
+- NuvTools.Common [10.0.2,10.1.0)
+- NuvTools.Security [10.1.0,10.2.0)
+- NuvTools.Security.Identity.Models (project reference)
+- FrameworkReference: Microsoft.AspNetCore.App
 
-All projects share common NuGet metadata:
-- Authors: Nuv Tools
-- License: LICENSE file in repository root
-- Icon: icon.png in repository root
-- Repository: https://github.com/nuvtools/nuvtools-security-identity
-- Website: https://nuvtools.com
-- Version: 10.0.0
-
-When updating package versions, update all four .csproj files consistently.
+### NuvTools.Security.Identity.EntityFrameworkCore
+- Microsoft.AspNetCore.Identity.EntityFrameworkCore (version varies by target framework)
+- NuvTools.Data.EntityFrameworkCore [10.1.0,10.2.0)

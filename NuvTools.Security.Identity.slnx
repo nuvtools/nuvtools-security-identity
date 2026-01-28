@@ -1,9 +1,12 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
   <Folder Name="/src/">
-    <Project Path="src\NuvTools.Security.Identity.Models\NuvTools.Security.Identity.Models.csproj" />
-    <Project Path="src\NuvTools.Security.Identity\NuvTools.Security.Identity.csproj" />
     <Project Path="src\NuvTools.Security.Identity.AspNetCore\NuvTools.Security.Identity.AspNetCore.csproj" />
     <Project Path="src\NuvTools.Security.Identity.EntityFrameworkCore\NuvTools.Security.Identity.EntityFrameworkCore.csproj" />
+    <Project Path="src\NuvTools.Security.Identity.Models\NuvTools.Security.Identity.Models.csproj" />
+    <Project Path="src\NuvTools.Security.Identity\NuvTools.Security.Identity.csproj" />
   </Folder>
   <Folder Name="/tests/" />
 </Solution>

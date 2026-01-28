@@ -34,7 +34,7 @@ public abstract class UserBase<TKey> : IdentityUser<TKey>
         ErrorMessageResourceName = nameof(Messages.XMustHaveUpToYCharacters),
         ErrorMessageResourceType = typeof(Messages))]
     [EmailAddress(
-        ErrorMessageResourceName = nameof(Messages.InvalidEmail),
+        ErrorMessageResourceName = nameof(Messages.XInvalid),
         ErrorMessageResourceType = typeof(Messages))]
     public override string? Email
     {

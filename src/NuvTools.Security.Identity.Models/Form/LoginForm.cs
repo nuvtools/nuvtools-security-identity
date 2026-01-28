@@ -21,7 +21,7 @@ public class LoginForm
     [Display(Name = nameof(Fields.Email), ResourceType = typeof(Fields))]
     [Required(ErrorMessageResourceName = nameof(Messages.XRequired), ErrorMessageResourceType = typeof(Messages))]
     [MaxLength(50, ErrorMessageResourceName = nameof(Messages.XMustHaveUpToYCharacters), ErrorMessageResourceType = typeof(Messages))]
-    [EmailAddress(ErrorMessageResourceName = nameof(Messages.InvalidEmail), ErrorMessageResourceType = typeof(Messages))]
+    [EmailAddress(ErrorMessageResourceName = nameof(Messages.XInvalid), ErrorMessageResourceType = typeof(Messages))]
     public virtual string? Email { get; set; }
 
     /// <summary>

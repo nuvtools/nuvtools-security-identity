@@ -2,15 +2,12 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net8;net9;net10.0</TargetFrameworks>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Nuv Tools</Authors>
-		<Copyright>Copyright © 2025 Nuv Tools</Copyright>
+		<Copyright>Copyright © 2026 Nuv Tools</Copyright>
 		<PackageProjectUrl>https://nuvtools.com</PackageProjectUrl>
-		<Description>Helper library to be used with ASP.NET Identity.</Description>
-		<Version>10.0.0</Version>
+		<Description>Permission-based authorization with dynamic policy provider and claim-based permission handler for ASP.NET Identity.</Description>
+		<Version>10.1.0</Version>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<PackageIcon>icon.png</PackageIcon>
@@ -20,7 +17,9 @@
 		<RepositoryType>git</RepositoryType>
 		<AnalysisLevel>latest</AnalysisLevel>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageTags>Nuv Tools Security ASP.NET Identity</PackageTags>
+		<PackageTags>NuvTools Security Identity Authorization Permission Policy</PackageTags>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -41,7 +40,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="10.0.0" />
-		<PackageReference Include="NuvTools.Security" Version="10.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="[10.0.2,10.1.0)" />
+		<PackageReference Include="NuvTools.Security" Version="[10.1.0,10.2.0)" />
 	</ItemGroup>
+
 </Project>
