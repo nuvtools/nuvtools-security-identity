@@ -7,7 +7,7 @@
 		<Copyright>Copyright © 2026 Nuv Tools</Copyright>
 		<PackageProjectUrl>https://nuvtools.com</PackageProjectUrl>
 		<Description>ASP.NET Core user management service with email confirmation, password management, and role administration for ASP.NET Identity.</Description>
-		<Version>10.1.0</Version>
+		<Version>10.1.1</Version>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<PackageIcon>icon.png</PackageIcon>
@@ -41,8 +41,8 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="NuvTools.Common" Version="[10.0.2,10.1.0)" />
-		<PackageReference Include="NuvTools.Security" Version="[10.1.0,10.2.0)" />
+		<PackageReference Include="NuvTools.Common" Version="10.0.3" />
+		<PackageReference Include="NuvTools.Security" Version="10.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>
