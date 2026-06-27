@@ -41,7 +41,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="10.0.9" />
-		<PackageReference Include="NuvTools.Security" Version="10.1.8" />
+		<PackageReference Include="NuvTools.Security" Version="10.1.9" />
 	</ItemGroup>
 
 </Project>
