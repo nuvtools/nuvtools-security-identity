@@ -7,7 +7,7 @@
 		<Copyright>Copyright © 2026 Nuv Tools</Copyright>
 		<PackageProjectUrl>https://nuvtools.com</PackageProjectUrl>
 		<Description>Permission-based authorization with dynamic policy provider and claim-based permission handler for ASP.NET Identity.</Description>
-		<Version>10.1.9</Version>
+		<Version>10.2.9</Version>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<PackageIcon>icon.png</PackageIcon>
@@ -41,7 +41,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="10.0.9" />
-		<PackageReference Include="NuvTools.Security" Version="10.1.9" />
+		<PackageReference Include="NuvTools.Security" Version="10.2.9" />
 	</ItemGroup>
 
 </Project>
