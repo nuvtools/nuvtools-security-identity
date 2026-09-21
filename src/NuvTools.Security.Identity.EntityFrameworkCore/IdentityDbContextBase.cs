@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using NuvTools.Common.ResultWrapper;
 using NuvTools.Data.EntityFrameworkCore.Context;
@@ -167,6 +168,42 @@ public abstract class IdentityDbContextBase<TUser, TRole, TIdentityKey> : Identi
     /// Use this property to check whether a transaction is currently active before performing transaction-specific operations.
     /// </remarks>
     public IDbContextTransaction? CurrentTransaction { get { return Database.CurrentTransaction; } }
+
+    /// <summary>
+    /// Acquires an exclusive, database-wide lock identified by <paramref name="name"/>, held until the current
+    /// transaction commits or rolls back.
+    /// </summary>
+    /// <param name="name">Lock name. Identifies what is being serialized, e.g. <c>"contract-number:53"</c>.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+    /// <returns>A task that completes once the lock is held.</returns>
+    /// <remarks>
+    /// The provider-specific statement is resolved from <see cref="IDbContextTransactionLock"/>, registered by the
+    /// provider package's <c>AddDatabase</c> helpers. When none is registered (e.g. an in-memory context built by
+    /// hand in a test) the call is a no-op.
+    /// </remarks>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="name"/> is null, empty or whitespace.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when there is no active transaction.</exception>
+    public Task AcquireTransactionLockAsync(string name, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
+        if (ApplicationServiceProvider?.GetService(typeof(IDbContextTransactionLock)) is not IDbContextTransactionLock lockService)
+            return Task.CompletedTask;
+
+        if (Database.CurrentTransaction is null)
+            throw new InvalidOperationException(
+                $"AcquireTransactionLockAsync('{name}') requires an active transaction: the lock is released when the " +
+                "transaction ends, so without one it would protect nothing. Call BeginTransactionAsync first.");
+
+        return lockService.AcquireAsync(this, name, cancellationToken);
+    }
+
+    /// <summary>
+    /// The application's service provider, as captured by <c>AddDbContext</c>; null when the context was built
+    /// without dependency injection.
+    /// </summary>
+    private IServiceProvider? ApplicationServiceProvider
+        => this.GetService<IDbContextOptions>().FindExtension<CoreOptionsExtension>()?.ApplicationServiceProvider;
 
     /// <summary>
     /// Asynchronously adds an entity to the database and saves the changes, returning the generated primary key.
