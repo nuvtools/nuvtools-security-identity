@@ -16,12 +16,13 @@ public class ForgotPasswordForm
     /// Gets or sets the email address of the user requesting a password reset.
     /// </summary>
     /// <remarks>
-    /// This field is required and must be a valid email format with a maximum length of 50 characters.
+    /// This field is required and must be a valid email format with a maximum length of 100 characters,
+    /// the same limit <see cref="UserBase{TKey}.Email"/> stores.
     /// The email must be associated with a confirmed user account to receive the reset link.
     /// </remarks>
     [Display(Name = nameof(Fields.Email), ResourceType = typeof(Fields))]
     [Required(ErrorMessageResourceName = nameof(Messages.XRequired), ErrorMessageResourceType = typeof(Messages))]
-    [MaxLength(50, ErrorMessageResourceName = nameof(Messages.XMustHaveUpToYCharacters), ErrorMessageResourceType = typeof(Messages))]
+    [MaxLength(100, ErrorMessageResourceName = nameof(Messages.XMustHaveUpToYCharacters), ErrorMessageResourceType = typeof(Messages))]
     [EmailAddress(ErrorMessageResourceName = nameof(Messages.XInvalid), ErrorMessageResourceType = typeof(Messages))]
     public string? Email { get; set; }
 }

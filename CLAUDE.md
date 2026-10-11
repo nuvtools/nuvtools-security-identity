@@ -122,6 +122,17 @@ UserServiceBase uses IResult/IResult\<T\> wrappers from NuvTools.Common.ResultWr
 - **Code style enforcement** is enabled during build (`<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>`)
 - **XML documentation generation** is required (`<GenerateDocumentationFile>True</GenerateDocumentationFile>`)
 
+## CI and Releasing
+
+`.github/workflows/ci.yml` builds the solution in Release with `-warnaserror` and runs the tests on every push and pull request to `main`.
+
+Each package has its own manually-run publish workflow (`models-publish.yml`, `identity-publish.yml`, `aspnetcore-publish.yml`, `entityframeworkcore-publish.yml`), all calling the reusable `package-publish.yml`. It reads `<Version>` from the `.csproj` (never computes it), verifies the package, pushes through nuget.org trusted publishing behind the `nuget` environment, and then writes the release tag (`models-vX.Y.Z`, …). See *Releasing* in the README.
+
+- A new package needs its own small workflow file and a row in the README table.
+- The SourceLink and symbol settings (`PublishRepositoryUrl`, `EmbedUntrackedSources`, `IncludeSymbols`, `snupkg`) must be in every packable project: the workflow fails a package without its `.snupkg`.
+- `NuvTools.Security.Identity.Models` is published before `NuvTools.Security.Identity.AspNetCore`, which references it as a project. When Models gains a type AspNetCore uses, its `<Version>` must be bumped and published first — the workflow only checks the dependency's version exists.
+- The solution has no test project yet, so the test step passes without running anything.
+
 ## Dependencies
 
 ### NuvTools.Security.Identity.Models

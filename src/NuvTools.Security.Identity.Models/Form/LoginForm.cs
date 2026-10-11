@@ -16,11 +16,12 @@ public class LoginForm
     /// Gets or sets the user's email address for login.
     /// </summary>
     /// <remarks>
-    /// This field is required and must be a valid email format with a maximum length of 50 characters.
+    /// This field is required and must be a valid email format with a maximum length of 100 characters,
+    /// the same limit <see cref="UserBase{TKey}.Email"/> stores.
     /// </remarks>
     [Display(Name = nameof(Fields.Email), ResourceType = typeof(Fields))]
     [Required(ErrorMessageResourceName = nameof(Messages.XRequired), ErrorMessageResourceType = typeof(Messages))]
-    [MaxLength(50, ErrorMessageResourceName = nameof(Messages.XMustHaveUpToYCharacters), ErrorMessageResourceType = typeof(Messages))]
+    [MaxLength(100, ErrorMessageResourceName = nameof(Messages.XMustHaveUpToYCharacters), ErrorMessageResourceType = typeof(Messages))]
     [EmailAddress(ErrorMessageResourceName = nameof(Messages.XInvalid), ErrorMessageResourceType = typeof(Messages))]
     public virtual string? Email { get; set; }
 

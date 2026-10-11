@@ -144,6 +144,57 @@ dotnet build NuvTools.Security.Identity.slnx
 dotnet build NuvTools.Security.Identity.slnx -c Release
 ```
 
+## Releasing
+
+Publishing to nuget.org is irreversible per version, so the workflow makes it the last and smallest
+step.
+
+**One workflow per library.** Each package has its own, so a run and an approval each concern
+exactly one package. The steps themselves are shared, in the reusable `package-publish.yml`.
+
+| Package | Workflow | Release tag |
+|---|---|---|
+| `NuvTools.Security.Identity.Models` | `models-publish.yml` | `models-vX.Y.Z` |
+| `NuvTools.Security.Identity` | `identity-publish.yml` | `identity-vX.Y.Z` |
+| `NuvTools.Security.Identity.AspNetCore` | `aspnetcore-publish.yml` | `aspnetcore-vX.Y.Z` |
+| `NuvTools.Security.Identity.EntityFrameworkCore` | `entityframeworkcore-publish.yml` | `entityframeworkcore-vX.Y.Z` |
+
+1. Set the package's `<Version>` in its `.csproj` and merge it. That is the version that gets
+   published; the workflow reads it and never computes one.
+2. Run the library's workflow by hand (*Actions → Models Publish → Run workflow*) with *push*
+   checked.
+3. The workflow builds the solution with `-warnaserror`, runs the tests, takes **that package only**
+   from the build output, verifies it carries its README, licence, icon, symbols and every target
+   framework, and then waits for approval on the `nuget` GitHub Environment before pushing.
+4. **After the push succeeds, the workflow tags the commit** with the tag in the table above. The tag is a
+   record of what is on nuget.org, never what starts a release, so it cannot exist for a version
+   that did not get there. A run whose tag already exists stops before building: the version has
+   been released and `<Version>` needs a bump.
+
+**`NuvTools.Security.Identity.Models` goes before `NuvTools.Security.Identity.AspNetCore`.** The
+latter references it as a project, so it depends on whatever `<Version>` Models has in that commit.
+The workflow checks that version is on nuget.org and refuses to push a package whose dependency is
+not there yet.
+
+That check knows a version exists, not what is in it. **When Models gains a type AspNetCore uses,
+bump its `<Version>` and publish it first** — otherwise AspNetCore is published against an older
+Models that does not have it, and fails for whoever installs it.
+
+**Versions published by hand are refused.** Releases made before these workflows exist on nuget.org
+with no tag. Pushing one again would skip the duplicate and then tag the current commit as a
+release it is not, so a version that is already on nuget.org stops the run. The exception is a
+re-run of the same run, which is how a push that succeeded and a tag that failed gets finished.
+
+**No API key is stored.** The push uses nuget.org's trusted publishing: the job presents a GitHub
+OIDC token, nuget.org checks it against the policy registered for this repository and answers with a
+key that lives for one hour. The repository needs one secret, `NUGET_USER` — the nuget.org profile
+name the policy belongs to — and the policy itself, registered under *Trusted Publishing* on
+nuget.org with the owner `nuvtools`, the repository `nuvtools-security-identity`, the workflow file
+and the environment `nuget`.
+
+Run a library's workflow by hand with *push* unchecked for a dry run that stops after the
+verification.
+
 ## Project Structure
 
 ```
