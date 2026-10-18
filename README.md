@@ -30,7 +30,8 @@ Base models, form DTOs, and API response models for ASP.NET Identity.
 **Key Components:**
 - `UserBase<TKey>` -- Abstract user entity extending `IdentityUser<TKey>` with Email, Name, Surname, Status, and password validation (6-40 chars, min 1 uppercase, 1 lowercase, 1 digit)
 - `RoleBase<TKey>` -- Abstract role entity extending `IdentityRole<TKey>` with Name and Claims
-- Form models: `LoginForm`, `UserForm`, `UserWithPasswordForm`, `ChangePasswordForm`, `ForgotPasswordForm`, `ResetPasswordForm`, `UpdateProfileForm`
+- Form models: `LoginForm`, `UserForm`, `UserWithPasswordForm`, `ChangePasswordForm`, `ForgotPasswordForm`, `ResetPasswordForm`, `SetPasswordForm`, `UpdateProfileForm`
+- Two-factor form models: `LoginWithTwoFactorForm`, `LoginWithRecoveryCodeForm`, `EnableAuthenticatorForm`
 - API models: `TokenResponse`, `RefreshTokenRequest`
 - `UserRoles` -- DTO for user-role associations
 
