@@ -32,6 +32,7 @@ Base models, form DTOs, and API response models for ASP.NET Identity.
 - `RoleBase<TKey>` -- Abstract role entity extending `IdentityRole<TKey>` with Name and Claims
 - Form models: `LoginForm`, `UserForm`, `UserWithPasswordForm`, `ChangePasswordForm`, `ForgotPasswordForm`, `ResetPasswordForm`, `SetPasswordForm`, `UpdateProfileForm`
 - Two-factor form models: `LoginWithTwoFactorForm`, `LoginWithRecoveryCodeForm`, `EnableAuthenticatorForm`
+- Phone number form models: `PhoneNumberForm` (the number as typed) and `VerifyPhoneNumberForm` (the code it received)
 - API models: `TokenResponse`, `RefreshTokenRequest`
 - `UserRoles` -- DTO for user-role associations
 
